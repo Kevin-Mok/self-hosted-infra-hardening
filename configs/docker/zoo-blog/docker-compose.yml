@@ -1,0 +1,73 @@
+# Sanitized snapshot of /home/kevin/zoo-blog/docker-compose.yml
+# Secret-bearing values are replaced with placeholders for documentation.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: zoo_blog
+      POSTGRES_USER: zoo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-REDACTED_POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U zoo -d zoo_blog"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  directus:
+    image: directus/directus:11.7.2
+    environment:
+      KEY: ${DIRECTUS_KEY:-REDACTED_DIRECTUS_KEY}
+      SECRET: ${DIRECTUS_SECRET:-REDACTED_DIRECTUS_SECRET}
+      ADMIN_EMAIL: admin@torontozooreport.com
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD:-REDACTED_ADMIN_PASSWORD}
+      DB_CLIENT: pg
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: zoo_blog
+      DB_USER: zoo
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-REDACTED_POSTGRES_PASSWORD}
+      PUBLIC_URL: http://localhost:8055
+    ports:
+      - "8055:8055"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:${APP_HOST_PORT:-3001}:3000"
+    volumes:
+      - ./public/media:/app/public/media:ro
+    environment:
+      NEXT_PUBLIC_SITE_URL: https://torontozooreport.com
+      DATABASE_URL: ${DATABASE_URL:-postgresql://zoo:REDACTED_POSTGRES_PASSWORD@postgres:5432/zoo_blog}
+      DIRECTUS_URL: http://directus:8055
+      DIRECTUS_TOKEN: ${DIRECTUS_TOKEN:-REDACTED_DIRECTUS_TOKEN}
+      REVALIDATE_TOKEN: ${REVALIDATE_TOKEN:-REDACTED_REVALIDATE_TOKEN}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      directus:
+        condition: service_started
+
+  backup:
+    image: postgres:16-alpine
+    environment:
+      PGPASSWORD: ${POSTGRES_PASSWORD:-REDACTED_POSTGRES_PASSWORD}
+    entrypoint: ["/bin/sh", "/scripts/backup-loop.sh"]
+    volumes:
+      - ./scripts/ops/backup-loop.sh:/scripts/backup-loop.sh:ro
+      - backups:/backups
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  backups:

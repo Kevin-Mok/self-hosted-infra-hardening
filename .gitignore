@@ -1,0 +1,23 @@
+# Secrets and local env
+.env
+.env.*
+*.secret
+*.secrets
+
+# TLS material
+*.key
+*.pem
+*.crt
+*.p12
+
+# Databases and dumps
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+*.dump
+
+# Local scratch files
+tmp/
+.DS_Store
+*.swp
