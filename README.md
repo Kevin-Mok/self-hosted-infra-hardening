@@ -29,6 +29,7 @@ This repo documents the live service layout and operational fixes for my persona
 - A sanitized `gitea.service` unit file
 - A sanitized Docker Compose snapshot for `torontozooreport.com`
 - Incident writeups for real outages and debugging sessions
+- Access-control notes for isolated users and shared service directories
 - Notes for sensitive config files that should be documented but not published verbatim
 
 ## Operational Focus
@@ -46,6 +47,7 @@ This repo documents the live service layout and operational fixes for my persona
 .
 ├── README.md
 ├── docs/
+│   ├── access/
 │   └── incidents/
 └── configs/
     ├── docker/
@@ -62,6 +64,7 @@ This repo documents the live service layout and operational fixes for my persona
 - [Gitea systemd unit](configs/systemd/gitea.service)
 - [torontozooreport.com Docker Compose stack](configs/docker/zoo-blog/docker-compose.yml)
 - [Gitea app.ini documentation and redaction notes](configs/gitea/README.md)
+- [2026-02-08 isolated user access note](docs/access/2026-02-08-isolated-user-shared-srv-access.md)
 - [2026-03-13 Gitea 502 incident writeup](docs/incidents/2026-03-13-gitea-502-bad-gateway.md)
 
 ## Notes On Sanitization
