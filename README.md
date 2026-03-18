@@ -1,7 +1,7 @@
 # homelab-vps
 
 Suggested GitHub description:
-`Recruiter-facing ops repo for my Ubuntu OVHcloud VPS: Nginx, Gitea, personal site routing, torontozooreport.com Docker Compose, and production fixes.`
+`Recruiter-facing ops repo for my Ubuntu OVHcloud VPS: Nginx, Gitea, personal site routing, chess.kevin-mok.com, torontozooreport.com Docker Compose, and production fixes.`
 
 This repo documents the live service layout and operational fixes for my personal VPS. It is meant to show real infrastructure work rather than tutorial-only examples: reverse proxying, TLS termination, systemd-managed services, Docker Compose deployment, and incident response for publicly reachable domains.
 
@@ -21,6 +21,7 @@ This repo documents the live service layout and operational fixes for my persona
 | --- | --- | --- |
 | `kevin-mok.com` | Nginx -> `127.0.0.1:3001` | Personal site |
 | `git.kevin-mok.com` | Nginx -> `127.0.0.1:3000` | Gitea managed by `systemd` |
+| `chess.kevin-mok.com` | Nginx -> `127.0.0.1:3003` | Chess analytics site |
 | `torontozooreport.com` | Nginx -> `127.0.0.1:3002` | Docker Compose app from `/home/kevin/zoo-blog` |
 
 ## What This Repo Contains
@@ -65,6 +66,7 @@ This repo documents the live service layout and operational fixes for my persona
 
 - [Gitea Nginx config](configs/nginx/gitea.conf)
 - [Recommended Gitea Nginx timeout hardening](configs/nginx/gitea.recommended.conf)
+- [chess.kevin-mok.com Nginx config](configs/nginx/chess.kevin-mok.com.conf)
 - [kevin-mok.com Nginx config](configs/nginx/kevin-mok.com.conf)
 - [torontozooreport.com Nginx config](configs/nginx/torontozooreport.com.conf)
 - [Gitea systemd unit](configs/systemd/gitea.service)
