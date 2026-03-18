@@ -49,7 +49,15 @@ This improved availability during the session, but it should be treated as a sta
 
 ## Recommended Nginx Hardening
 
-Add the following inside the Gitea `location /` block:
+The current confirmed live snapshot stays in `configs/nginx/gitea.conf`.
+
+A sanitized follow-up example with the proposed timeout tuning lives in:
+
+```text
+configs/nginx/gitea.recommended.conf
+```
+
+The change itself is:
 
 ```nginx
 proxy_connect_timeout 10s;
@@ -66,13 +74,36 @@ sudo systemctl reload nginx
 
 ## Next-Incident Capture Commands
 
-Run these before restarting Gitea if the issue comes back:
+For repeatable capture from this repo, run:
+
+```bash
+sudo ./scripts/capture-gitea-incident.sh
+```
+
+The script writes a timestamped bundle under `/tmp/` by default and keeps the default capture non-destructive.
+
+If the failure appears tied to unexpected users, repositories, or registration settings, run the state audit too:
+
+```bash
+sudo ./scripts/audit-gitea-state.sh
+```
+
+That script captures a safe subset of `app.ini`, recent users and repositories from SQLite, and repository counts by owner.
+
+If manual capture is preferred, run these before restarting Gitea:
 
 ```bash
 sudo journalctl -u gitea -n 200 --no-pager
 sudo grep -E "upstream|502|timed out|connect\\(\\) failed" /var/log/nginx/error.log | tail -n 100
-sudo kill -QUIT "$(pgrep -xo gitea)"
+sudo systemctl status gitea --no-pager
+sudo nginx -t
 sudo journalctl -u gitea -n 300 --no-pager
+```
+
+If a deeper goroutine dump is needed, trigger it separately and only with the understanding that it is more invasive than the default script capture:
+
+```bash
+sudo kill -QUIT "$(pgrep -xo gitea)"
 ```
 
 ## Takeaway

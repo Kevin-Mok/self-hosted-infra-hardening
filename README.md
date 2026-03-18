@@ -26,8 +26,10 @@ This repo documents the live service layout and operational fixes for my persona
 ## What This Repo Contains
 
 - Sanitized Nginx vhost configs for each public domain
+- Recommended post-incident config examples where the live snapshot should stay unchanged
 - A sanitized `gitea.service` unit file
 - A sanitized Docker Compose snapshot for `torontozooreport.com`
+- Privileged incident capture scripts for service debugging
 - Incident writeups for real outages and debugging sessions
 - Access-control notes for isolated users and shared service directories
 - Notes for sensitive config files that should be documented but not published verbatim
@@ -46,24 +48,30 @@ This repo documents the live service layout and operational fixes for my persona
 ```text
 .
 ├── README.md
+├── configs/
+│   ├── docker/
+│   ├── gitea/
+│   ├── nginx/
+│   └── systemd/
 ├── docs/
 │   ├── access/
 │   └── incidents/
-└── configs/
-    ├── docker/
-    ├── gitea/
-    ├── nginx/
-    └── systemd/
+└── scripts/
+    ├── audit-gitea-state.sh
+    └── capture-gitea-incident.sh
 ```
 
-## Config Inventory
+## Inventory
 
 - [Gitea Nginx config](configs/nginx/gitea.conf)
+- [Recommended Gitea Nginx timeout hardening](configs/nginx/gitea.recommended.conf)
 - [kevin-mok.com Nginx config](configs/nginx/kevin-mok.com.conf)
 - [torontozooreport.com Nginx config](configs/nginx/torontozooreport.com.conf)
 - [Gitea systemd unit](configs/systemd/gitea.service)
 - [torontozooreport.com Docker Compose stack](configs/docker/zoo-blog/docker-compose.yml)
 - [Gitea app.ini documentation and redaction notes](configs/gitea/README.md)
+- [Root-only Gitea state audit script](scripts/audit-gitea-state.sh)
+- [Root-only Gitea incident capture script](scripts/capture-gitea-incident.sh)
 - [2026-02-08 isolated user access note](docs/access/2026-02-08-isolated-user-shared-srv-access.md)
 - [2026-03-13 Gitea 502 incident writeup](docs/incidents/2026-03-13-gitea-502-bad-gateway.md)
 
