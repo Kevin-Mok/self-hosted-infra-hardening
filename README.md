@@ -74,6 +74,7 @@ This repo documents the live service layout and operational fixes for my persona
 - [Root-only Gitea incident capture script](scripts/capture-gitea-incident.sh)
 - [2026-02-08 isolated user access note](docs/access/2026-02-08-isolated-user-shared-srv-access.md)
 - [2026-03-13 Gitea 502 incident writeup](docs/incidents/2026-03-13-gitea-502-bad-gateway.md)
+- [2026-03-18 Gitea spam-induced latency writeup](docs/incidents/2026-03-18-gitea-spam-induced-latency.md)
 
 ## Notes On Sanitization
 
