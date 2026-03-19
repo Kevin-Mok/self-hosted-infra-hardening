@@ -31,6 +31,7 @@ This repo documents the live service layout and operational fixes for my persona
 - A sanitized `gitea.service` unit file
 - A sanitized Docker Compose snapshot for `torontozooreport.com`
 - Privileged incident capture scripts for service debugging
+- Hardened SSH access scripts and an access note for reaching a home Ubuntu PC from Android Termux
 - Incident writeups for real outages and debugging sessions
 - Access-control notes for isolated users and shared service directories
 - Notes for sensitive config files that should be documented but not published verbatim
@@ -56,8 +57,12 @@ This repo documents the live service layout and operational fixes for my persona
 │   └── systemd/
 ├── docs/
 │   ├── access/
+│   │   └── 2026-03-19-android-termux-ssh-home-pc.md
 │   └── incidents/
 └── scripts/
+    ├── doctor-phone-ssh.sh
+    ├── harden-phone-ssh.sh
+    ├── setup-phone-ssh.sh
     ├── audit-gitea-state.sh
     └── capture-gitea-incident.sh
 ```
@@ -74,7 +79,11 @@ This repo documents the live service layout and operational fixes for my persona
 - [Gitea app.ini documentation and redaction notes](configs/gitea/README.md)
 - [Root-only Gitea state audit script](scripts/audit-gitea-state.sh)
 - [Root-only Gitea incident capture script](scripts/capture-gitea-incident.sh)
+- [Phone SSH setup script](scripts/setup-phone-ssh.sh)
+- [Phone SSH doctor script](scripts/doctor-phone-ssh.sh)
+- [Phone SSH hardening script](scripts/harden-phone-ssh.sh)
 - [2026-02-08 isolated user access note](docs/access/2026-02-08-isolated-user-shared-srv-access.md)
+- [2026-03-19 Android Termux SSH home-PC access note](docs/access/2026-03-19-android-termux-ssh-home-pc.md)
 - [2026-03-13 Gitea 502 incident writeup](docs/incidents/2026-03-13-gitea-502-bad-gateway.md)
 - [2026-03-18 Gitea spam-induced latency writeup](docs/incidents/2026-03-18-gitea-spam-induced-latency.md)
 
