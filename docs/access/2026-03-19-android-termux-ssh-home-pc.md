@@ -38,7 +38,8 @@ SSH port: 22229/tcp
 
 ## Commands Used
 
-Host-side setup on the Ubuntu PC:
+Host-side setup on the Ubuntu PC used
+[setup-phone-ssh.sh](../../scripts/setup-phone-ssh.sh):
 
 ```bash
 ./scripts/setup-phone-ssh.sh \
@@ -48,7 +49,8 @@ Host-side setup on the Ubuntu PC:
   --keep-port-22
 ```
 
-After SSH access worked, the extra hardening layer was applied:
+After SSH access worked, the extra hardening layer was applied with
+[harden-phone-ssh.sh](../../scripts/harden-phone-ssh.sh):
 
 ```bash
 ./scripts/harden-phone-ssh.sh --port 22229
@@ -129,15 +131,15 @@ The successful debugging order was:
 2. Check whether `ssh.socket` was overriding the expected listener port.
 3. Confirm whether `ssh.service` was actually active instead of assuming the
    config reload was enough.
-4. Use `./scripts/doctor-phone-ssh.sh --port 22229` to prove whether the host
-   itself was listening on `22229`.
+4. Use [doctor-phone-ssh.sh](../../scripts/doctor-phone-ssh.sh) with
+   `--port 22229` to prove whether the host itself was listening on `22229`.
 5. Only after the host was confirmed healthy, debug router and upstream gateway
    forwarding.
 6. Compare the public IP seen from the internet with the Archer WAN IP to
    detect the double-NAT problem.
 
-The doctor script was the main divider between host problems and network-edge
-problems:
+The [doctor-phone-ssh.sh](../../scripts/doctor-phone-ssh.sh) script was the
+main divider between host problems and network-edge problems:
 
 - if nothing listened on `22229`, the bug was still on the Ubuntu PC
 - if the host listened on `22229`, the remaining problem was router, gateway,
